@@ -92,6 +92,26 @@ async function transcribe(audio, language) {
   return (result.text || "").trim();
 }
 
+function playFeedbackTone(frequency, duration) {
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    const context = new AudioCtx();
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    oscillator.frequency.value = frequency;
+    oscillator.type = "sine";
+    gain.gain.setValueAtTime(0.0001, context.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.12, context.currentTime + 0.015);
+    gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + duration / 1000);
+    oscillator.connect(gain);
+    gain.connect(context.destination);
+    oscillator.start();
+    oscillator.stop(context.currentTime + duration / 1000 + 0.02);
+    oscillator.onended = () => context.close();
+  } catch (error) { console.debug("PTT audio feedback unavailable", error); }
+}
+
 function startRecording(mode) {
   if (!transcriber) {
     setState("Tap Load Whisper on this device first.");
@@ -134,11 +154,13 @@ function startRecording(mode) {
       const id = activeMode === "training" ? "trainingStatus" : "micStatus";
       const el = document.getElementById(id);
       if (el) el.textContent = "Whisper error: " + error.message;
+      playFeedbackTone(220, 260);
     }
   };
   recorder.start();
+  playFeedbackTone(880, 90);
   const status = document.getElementById(mode === "training" ? "trainingStatus" : "micStatus");
-  if (status) status.textContent = "PTT ON · Speak now, then press PTT OFF. Audio stays on this device.";
+  if (status) status.textContent = "● RECORDING · Speak one product, then press PTT again. Audio stays on this device.";
   const button = document.getElementById(mode === "training" ? "trainingMic" : "mic");
   if (button) button.classList.add("active");
 }
@@ -146,6 +168,7 @@ function startRecording(mode) {
 function stopRecording(mode) {
   if (recorder && recorder.state === "recording" && currentMode === mode) {
     recorder.stop();
+    playFeedbackTone(520, 120);
     const button = document.getElementById(mode === "training" ? "trainingMic" : "mic");
     if (button) button.classList.remove("active");
     const status = document.getElementById(mode === "training" ? "trainingStatus" : "micStatus");
@@ -153,7 +176,9 @@ function stopRecording(mode) {
   }
 }
 
-loadButton?.addEventListener("click", loadWhisper);\n// Download and initialize Whisper automatically during page startup. The button remains available for retry.\nloadWhisper();
+loadButton?.addEventListener("click", loadWhisper);
+// Download and initialize Whisper automatically during page startup. The button remains available for retry.
+loadWhisper();
 document.getElementById("trainingMic")?.addEventListener("click", () => {
   if (recorder?.state === "recording") stopRecording("training");
   else startRecording("training");
@@ -168,10 +193,10 @@ document.addEventListener("salesfox-transcript", event => {
   if (mode === "training") {
     if (typeof window.submitTrainingAnswer === "function") window.submitTrainingAnswer(text);
     const status = document.getElementById("trainingStatus");
-    if (status) status.textContent = "Whisper heard: " + text;
+    if (status) status.textContent = "✓ Whisper transcribed: " + text;
   } else {
     const status = document.getElementById("micStatus");
-    if (status) status.textContent = "Whisper heard: " + text;
+    if (status) status.textContent = "✓ Whisper transcribed: " + text;
     if (typeof window.salesFoxCommand === "function") window.salesFoxCommand(text);
   }
 });
