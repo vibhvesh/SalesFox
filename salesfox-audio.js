@@ -3,7 +3,7 @@ import { pipeline, env } from "https://cdn.jsdelivr.net/npm/@huggingface/transfo
 const RATE = 12000;
 const MODEL = "onnx-community/whisper-tiny";
 let engine = null, loading = false, audioContext = null, stream = null, source = null, processor = null, mute = null;
-let active = false, samples = [], startedAt = 0, maxTimer = null, queue = [], busy = false;
+let active = false, pressed = false, samples = [], startedAt = 0, maxTimer = null, queue = [], busy = false;
 const button = document.getElementById("speak");
 const emit = (state, data={}) => window.dispatchEvent(new CustomEvent("salesfox-audio",{detail:{state,...data}}));
 function tone(freq, ms) {
@@ -62,7 +62,7 @@ async function begin(){
     samples=[];startedAt=Date.now();active=true;
     tone(880,90);emit("recording",{startedAt});
     maxTimer=setTimeout(()=>end("five-second limit"),5000);
-  }catch(e){releaseMic();emit("mic-error",{message:e.message||String(e)});}
+  }catch(e){pressed=false;releaseMic();emit("mic-error",{message:e.message||String(e)});}
 }
 function end(reason="PTT released"){
   if(!active)return;
@@ -89,8 +89,8 @@ function resample(input,fromRate,toRate){if(fromRate===toRate)return input;const
   try{const decoded=await c.decodeAudioData(await blob.arrayBuffer());return decoded.getChannelData(0).slice();}
   finally{await c.close();}
 }
-function pttDown(e){if(e){e.preventDefault();if(button.setPointerCapture&&e.pointerId!==undefined){try{button.setPointerCapture(e.pointerId);}catch(_){}}}if(active)return;begin();}
-function pttUp(e){if(e)e.preventDefault();if(active)end("PTT released");}
+function pttDown(e){if(active||pressed)return;if(e){e.preventDefault();if(button.setPointerCapture&&e.pointerId!==undefined){try{button.setPointerCapture(e.pointerId);}catch(_){}}}if(active)return;begin();}
+function pttUp(e){if(e)e.preventDefault();if(pressed||active)end("PTT released");}
 if(button){
   button.addEventListener("pointerdown",pttDown);
   ["pointerup","pointercancel","lostpointercapture"].forEach(type=>button.addEventListener(type,pttUp));
