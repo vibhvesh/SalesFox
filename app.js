@@ -39,7 +39,7 @@ function command(raw){if(!raw.trim())return;const s=raw.trim(),n=normalize(s);
  const p=find(s);addLog($('speaker').value+': '+s);
  if(/\b(clear|empty)\b/.test(n)){basket={};}
  else if(/\b(remove|delete)\b/.test(n)){if(p){basket[p.id]=Math.max(0,(basket[p.id]||0)-quantity(s));if(!basket[p.id])delete basket[p.id];}}
- else if(p){basket[p.id]=(basket[p.id]||0)+quantity(s);p.uses=(p.uses||0)+1;save();renderFrequent();}
+ else if(p){basket[p.id]=(basket[p.id]||0)+quantity(s);p.uses=(p.uses||0)+1;save();renderFrequent();renderHomeTop();}
  else{$('micStatus').textContent='Product not recognised. Try one of the ten names shown above.';addLog('SalesFox: Product not recognised');return;}
  saveBasket();renderBasket();updateBillState();
 }
