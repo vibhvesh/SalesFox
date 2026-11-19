@@ -79,3 +79,11 @@ footer{border-top:1px solid #e7e8d9;margin-top:38px;padding:20px 0;color:#718071
 .device-permissions .permission-button{width:auto;min-width:210px;margin:0;background:#176b3a;color:white;border:0;border-radius:11px;padding:12px 15px;font-size:11px;font-weight:850}
 .device-permissions .permission-button:disabled{opacity:.7}
 @media(max-width:600px){.device-permissions{align-items:stretch;flex-direction:column}.device-permissions .permission-button{width:100%;min-width:0}}
+
+/* Always-visible phone PTT control: page content scrolls behind it. */
+.mic.ptt-fixed{position:fixed;z-index:1000;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);width:104px;height:104px;margin:0;border:7px solid #e4f2e9;border-radius:50%;box-shadow:0 8px 28px #173d2b35;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;background:#176b3a;color:#fff}
+.mic.ptt-fixed .ptt-icon{font-size:27px;line-height:1.1}.mic.ptt-fixed span:not(.ptt-icon){font-size:12px;font-weight:900;letter-spacing:1px}.mic.ptt-fixed small{font-size:9px;font-weight:800;letter-spacing:.8px;color:#e8f6ed}
+.mic.ptt-fixed.active{background:#c83e3e;border-color:#ffe5e5;box-shadow:0 0 0 7px #ffe5e5,0 8px 28px #173d2b35}
+.mic.ptt-fixed:disabled{opacity:.55;filter:grayscale(.3)}
+body:has(#billingScreen:not([hidden])){padding-bottom:145px}
+@media(max-width:700px){.mic.ptt-fixed{bottom:calc(16px + env(safe-area-inset-bottom));width:96px;height:96px}.mic.ptt-fixed .ptt-icon{font-size:25px}body:has(#billingScreen:not([hidden])){padding-bottom:132px}}
