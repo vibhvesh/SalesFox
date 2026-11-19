@@ -55,6 +55,7 @@ async function loadWhisper() {
         progress_callback
       });
     }
+    window.salesFoxWhisperReady = true;
     loadButton.textContent = "✓ Whisper ready";
     setState("Whisper is ready on this device. Model files are cached by the browser.");
     document.dispatchEvent(new CustomEvent("salesfox-whisper-ready"));
