@@ -11,3 +11,36 @@
 .permission-button{display:block;width:100%;max-width:280px;margin:16px auto 8px;padding:12px 16px;border:1px solid #b8d8c4;border-radius:10px;background:#edf8f1;color:#176b49;font-size:13px;font-weight:800;cursor:pointer}.permission-button:disabled{opacity:.65;cursor:wait}.permission-button:focus-visible,.mic:focus-visible{outline:3px solid #e4ad42;outline-offset:3px}.training-panel .permission-button{margin-top:18px}
 
 .whisper-loader{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 20px;padding:14px 18px}.whisper-loader b,.whisper-loader small{display:block}.whisper-loader b{font-size:13px}.whisper-loader small{font-size:10px;color:var(--muted);margin-top:5px}.whisper-loader button{width:auto;min-width:190px;margin:0}.whisper-language{max-width:260px;margin:12px auto;text-align:left}.whisper-language select{height:38px}@media(max-width:600px){.whisper-loader{align-items:stretch;flex-direction:column}.whisper-loader button{width:100%}}
+
+/* SalesFox fresh-market visual identity — original design, inspired by bright quick-commerce palettes */
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;color:#193b2b;background:#fffdf2;--green:#176b3a;--muted:#718071;--line:#e8eadb}
+body{background:#fffdf2}
+header{height:76px;background:#f7df35;border:0;padding:0 max(20px,calc((100% - 1050px)/2));box-shadow:0 3px 0 #e8cf25}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#173d2b}
+.logo-mark{display:flex;width:46px;height:46px;align-items:center;justify-content:center}.logo-mark svg{width:46px;height:46px;display:block}
+.brand-copy b{display:block;font-size:22px;letter-spacing:-.8px;font-weight:900;line-height:1}.brand-copy small{display:block;font-size:10px;color:#31563b;font-weight:750;margin-top:4px;letter-spacing:.2px}
+.saved{font-size:10px;color:#173d2b;background:#fff5a8;padding:9px 13px;border-radius:24px;font-weight:750}
+main{max-width:1050px;padding-top:30px}
+.hero{background:#f7df35;border-radius:22px;padding:28px 30px;margin-bottom:20px;position:relative;overflow:hidden}
+.hero:after{content:"🛍️";position:absolute;right:34px;top:20px;font-size:76px;opacity:.22;transform:rotate(-10deg)}
+.hero .eyebrow{color:#315b35}.hero h1{color:#173d2b;font-size:42px;font-weight:900}.hero p:last-child{color:#355b3d;max-width:480px}
+.eyebrow{color:#176b3a}
+.panel{border:1px solid #e9eadf;border-radius:18px;box-shadow:0 5px 18px #173d2b0a}
+.primary{background:#176b3a;border-radius:12px;font-weight:800;box-shadow:0 3px 0 #0f512b}
+.primary:hover{background:#10572e}.primary:disabled{box-shadow:none}
+.secondary{background:#fff4a8;color:#244b30;border-radius:12px}
+input,select{border-color:#dfe5d7;border-radius:11px}
+input:focus,select:focus{outline:2px solid #e7ca20;border-color:#176b3a}
+.photo{background:#fffbe0;border-color:#d7c84a}
+.discovery{border-radius:20px;background:#e8f4df;border:1px solid #dcebd1}
+.discovery .eyebrow{color:#176b3a}.challenge-button{background:#f7df35;color:#173d2b;border-radius:12px;font-weight:850}
+.discovery-art{background:#f7df35;color:#173d2b;border-radius:18px}
+.live-pill{background:#f7df35;color:#173d2b}
+.top-products{border-radius:18px}
+.whisper-loader{background:#f0f7e9;border-color:#dcebd1}
+.whisper-loader button{background:#fff4a8}
+.mic{background:#176b3a;box-shadow:0 5px 0 #0f512b}
+.mic.active{background:#e64b35;box-shadow:0 5px 0 #b52d20}
+footer{border-top:1px solid #e7e8d9;margin-top:38px;padding:20px 0;color:#718071;font-size:11px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.footer-brand{display:flex;align-items:center;gap:8px;color:#193b2b}.footer-brand b{font-size:13px;letter-spacing:1px}.footer-brand span{font-size:11px}.footer-brand a{color:#176b3a;font-weight:800;text-decoration:none}
+@media(max-width:600px){header{height:68px}.hero{padding:24px 20px}.hero h1{font-size:34px}.hero:after{right:16px;top:18px;font-size:52px;opacity:.15}.saved{font-size:9px;padding:7px 9px}footer{align-items:flex-start;flex-direction:column}}
