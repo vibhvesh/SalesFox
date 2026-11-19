@@ -79,12 +79,12 @@ async function processQueue(){
   emit("transcribing",{id:job.id,message:"Whisper is transcribing the captured PTT audio…"});
   try{
     const decoded=await audioContextForDecode(job.wav);
-    const result=await engine(decoded,{sampling_rate:RATE,task:"transcribe"});
+    const speech=resample(decoded,RATE,16000);\n    const result=await engine(speech,{task:"transcribe"});
     const text=(result.text||"").trim();queue.shift();emit("transcript",{id:job.id,text,durationMs:job.durationMs,queueLength:queue.length});
   }catch(e){queue.shift();emit("transcription-error",{id:job.id,message:e.message||String(e),queueLength:queue.length});}
   finally{busy=false;if(queue.length)processQueue();}
 }
-async function audioContextForDecode(blob){
+function resample(input,fromRate,toRate){if(fromRate===toRate)return input;const n=Math.floor(input.length*toRate/fromRate),out=new Float32Array(n),ratio=fromRate/toRate;for(let i=0;i<n;i++){const p=i*ratio,l=Math.floor(p),f=p-l;out[i]=(input[l]||0)+((input[Math.min(l+1,input.length-1)]||0)-(input[l]||0))*f;}return out;}\nasync function audioContextForDecode(blob){
   const C=window.AudioContext||window.webkitAudioContext,c=new C();
   try{const decoded=await c.decodeAudioData(await blob.arrayBuffer());return decoded.getChannelData(0).slice();}
   finally{await c.close();}
