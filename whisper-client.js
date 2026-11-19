@@ -153,7 +153,7 @@ function stopRecording(mode) {
   }
 }
 
-loadButton?.addEventListener("click", loadWhisper);
+loadButton?.addEventListener("click", loadWhisper);\n// Download and initialize Whisper automatically during page startup. The button remains available for retry.\nloadWhisper();
 document.getElementById("trainingMic")?.addEventListener("click", () => {
   if (recorder?.state === "recording") stopRecording("training");
   else startRecording("training");
