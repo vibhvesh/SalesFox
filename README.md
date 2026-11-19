@@ -1,24 +1,20 @@
-# SalesFox
+# SalesFox Grocery Recognition Game
 
-A simple, voice-first retail product catalogue and billing prototype.
+A simple voice-first game for recognizing 50 everyday FMCG products found in Indian households.
 
-## Run locally
-Run `python -m http.server 8000` in this folder and open http://localhost:8000. Camera and microphone access require HTTPS or localhost.
+## How to play
+1. View the product package.
+2. Tap the microphone and say its name, or type the answer.
+3. Get a point for a correct answer and move to the next product.
+4. Upload your own package photo for any product.
 
-## Try it
-1. Add products one at a time with a photo, name, unit and selling price.
-2. Continue to billing and select a simulated shopkeeper.
-3. Speak a command or type one, for example “Add two Tata Salt”.
-4. Review the shared draft basket.
-5. Press **Confirm & generate bill** to create the invoice. Nothing is invoiced automatically.
-6. Print or save the invoice as PDF.
+## Product images
+The game looks up available package photos from the Open Food Facts community database. Availability and exact Indian packaging can vary. If a product image is missing or not the right pack, upload a photo from your phone. Uploaded photos are saved locally in the browser on that device.
 
-## GitHub Pages
-In repository Settings → Pages, select **Deploy from a branch**, choose `main` and `/(root)`, then save.
+## Speech
+Uses the browser's built-in speech recognition when available. No Whisper model download is required for this game. If voice recognition is unavailable, use the text answer field.
 
-## Prototype limitations
-- Product photos, catalogue and draft basket are stored in this browser's localStorage.
-- Five shopkeepers are simulated on one device; live multi-device Sanket PTT integration is not included yet.
-- Voice uses the browser SpeechRecognition/Web Speech API where supported. Depending on the browser, recognition may use an online service; this is not local Whisper.
-- Product matching is simple catalogue-name matching, not visual recognition.
-- There is no shared server database, authentication or cross-device synchronization in this prototype.
+## Run
+Open the GitHub Pages website over HTTPS.
+
+Product data and product images from Open Food Facts are community-contributed. See https://world.openfoodfacts.org/ and its reuse/licensing terms.
